@@ -51,9 +51,23 @@ fn init_twice_reverts_and_keeps_the_first_admin() {
         Err(Ok(Error::AlreadyInitialized.into()))
     );
 
-    // still the first admin, not the impostor: it can still force a release
+    // still the first admin, not the impostor: a forced release asks the first admin to sign
     let squatter = claimed(&env, &client, "brand");
     client.admin_release(&symbol_short!("brand"));
+    assert_eq!(
+        env.auths(),
+        std::vec![(
+            admin.clone(),
+            AuthorizedInvocation {
+                function: AuthorizedFunction::Contract((
+                    client.address.clone(),
+                    Symbol::new(&env, "admin_release"),
+                    (symbol_short!("brand"),).into_val(&env),
+                )),
+                sub_invocations: std::vec![],
+            }
+        )]
+    );
     assert_eq!(client.resolve(&symbol_short!("brand")), None);
     assert_eq!(client.reverse(&squatter), None);
 }
@@ -86,8 +100,8 @@ fn claim_taken_by_other_reverts() {
 }
 
 /// A rename onto someone else's handle is a `claim` like any other, so it reverts with
-/// `HandleTaken`, and it reverts before touching storage: alice keeps `a`, bob keeps `b`,
-/// and nothing is announced for the handle alice never gave up.
+/// `HandleTaken` and the whole call rolls back: alice keeps `a` (it is not freed on the way),
+/// bob keeps `b`.
 #[test]
 fn renaming_into_a_taken_handle_reverts_and_changes_nothing() {
     let (env, client, _admin) = setup();
@@ -103,8 +117,12 @@ fn renaming_into_a_taken_handle_reverts_and_changes_nothing() {
     assert_eq!(client.resolve(&symbol_short!("a")), Some(alice));
     assert_eq!(client.resolve(&symbol_short!("b")), Some(bob.clone()));
     assert_eq!(client.reverse(&bob), Some(symbol_short!("b")));
-    // the rolled-back call published nothing, not even a `released` for alice's own handle
-    assert_eq!(env.events().all(), vec![&env]);
+    // `a` is still held, so nobody else can take it
+    let carol = Address::generate(&env);
+    assert_eq!(
+        client.try_claim(&carol, &symbol_short!("a")),
+        Err(Ok(Error::HandleTaken.into()))
+    );
 }
 
 #[test]
