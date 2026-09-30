@@ -114,12 +114,24 @@ export function Onboarding() {
           placeholder={t('onboard.app.placeholder')}
           className="text-center"
           aria-label={t('onboard.app.ariaLabel')}
-          aria-describedby="handle-status"
+          aria-describedby="handle-rules handle-status"
+          maxLength={20}
         />
-        <p id="handle-status" aria-live="polite" className="h-4 text-xs">
+        {/* Rules hint — always visible so the user knows what characters are allowed */}
+        <p id="handle-rules" className="text-xs text-muted-foreground">
+          {t('onboard.app.handleRules')}
+        </p>
+        <p id="handle-status" aria-live="polite" className="min-h-4 text-xs">
           {avail === 'checking' && <span className="text-muted-foreground">{t('onboard.app.checking')}</span>}
           {avail === 'free' && <span className="text-secondary">{t('onboard.app.handleFree', { handle: normalizeHandle(handle) })}</span>}
           {avail === 'taken' && <span className="text-destructive">{t('onboard.app.handleTaken', { handle: normalizeHandle(handle) })}</span>}
+          {avail === 'idle' && handle.length > 0 && normalizeHandle(handle) !== handle.toLowerCase() && (
+            <span className="text-amber-500">
+              {t('onboard.app.handleNormalized', {
+                removed: handle.toLowerCase().replace(/[a-z0-9_]/g, ''),
+              })}
+            </span>
+          )}
         </p>
         <Button type="submit" size="lg" disabled={creating || avail === 'taken'} className="w-full">
           {creating ? t('onboard.app.submitting') : t('onboard.app.submit')}

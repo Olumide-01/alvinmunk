@@ -249,12 +249,13 @@ function ClaimInner({ params }: { params: { id: string } }) {
             </span>
             {error && (
               <>
-                <p className="max-w-xs text-sm text-destructive">{error}</p>
+                <p className="min-h-[1.25rem] max-w-xs text-sm text-destructive">{error}</p>
                 <Link href="/app" className="font-mono text-xs text-muted-foreground underline">
                   open_the_app →
                 </Link>
               </>
             )}
+            {!error && <p className="min-h-[1.25rem]" aria-hidden />}
             <p className="max-w-xs text-xs text-muted-foreground text-balance">
               Nothing to install — we set up your profile, fees sponsored on testnet. No seed phrase.
             </p>
