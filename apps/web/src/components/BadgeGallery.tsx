@@ -9,7 +9,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { getBadges, visibleBadges, type Badge, type BadgePerson } from '@/lib/badges';
 import { FOCUS_MODE } from '@/lib/focus';
 import { useTranslations, type TFn } from '@/lib/i18n';
-import { cn, shortAddress } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { shortAddr } from '@alvinmunk/shared';
 
 type State = { status: 'loading' } | { status: 'error' } | { status: 'ready'; badges: Badge[] };
 
@@ -95,11 +96,11 @@ function BadgeTile({ badge }: { badge: Badge }) {
         {/* Decorative: the badge name below is the accessible label. */}
         <Sticker name={badge.sticker} size={48} className={cn(!badge.earned && 'opacity-40 grayscale')} />
       </div>
-      <p className={cn('text-[11px] font-semibold leading-tight', !badge.earned && 'text-muted-foreground')}>
+      <p className={cn('text-2xs font-semibold leading-tight', !badge.earned && 'text-muted-foreground')}>
         {t(`${key}.name`)}
         <span className="sr-only"> — {t(badge.earned ? 'badges.earned' : 'badges.locked')}</span>
       </p>
-      <p className="font-mono text-[9px] uppercase leading-tight tracking-wider text-muted-foreground">
+      <p className="font-mono text-2xs uppercase leading-tight tracking-wider text-muted-foreground">
         <BadgeDetail badge={badge} t={t} />
       </p>
     </li>
@@ -129,7 +130,7 @@ function BadgeDetail({ badge, t }: { badge: Badge; t: TFn }) {
 }
 
 function PersonName({ person }: { person: BadgePerson }) {
-  if (!person.handle) return <span className="normal-case">{shortAddress(person.address)}</span>;
+  if (!person.handle) return <span className="normal-case">{shortAddr(person.address)}</span>;
   return (
     <Link
       href={`/u/${person.handle}`}
