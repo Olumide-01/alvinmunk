@@ -1,10 +1,18 @@
 # 🛰️ alvinmunk
 
+[![CI](https://github.com/mericcintosun/alvinmunk/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mericcintosun/alvinmunk/actions/workflows/ci.yml)
+[![Live on Vercel](https://img.shields.io/badge/live-alvinmunk.vercel.app-black?logo=vercel)](https://alvinmunk.vercel.app)
+[![Stellar testnet](https://img.shields.io/badge/network-Stellar%20testnet-7B61FF?logo=stellar)](https://stellar.expert/explorer/testnet)
+
 > **Collect people, not points.** A social, gamified, non-betting *proof-of-people* reputation game on Stellar/Soroban — built for the Rise In **Stellar Journey to Mastery** belt program (White → Master).
 
 - You earn reputation through **mutual/social actions** (vouch for someone, complete a verifiable quest, tip), not solo grinding.
 - Badges name **other humans** and auto-generate a shareable card — reputation about *others* is viral; reputation about *yourself* is a résumé.
 - Reputation is **spendable**: it unlocks bounties, ranking, and USDC micro-rewards.
+
+<img src="./docs/media/readme-hero.jpg" alt="alvinmunk on a phone: the landing page, creating a profile, and the leaderboard" width="880">
+
+[![Watch the 2-minute demo on YouTube](https://img.youtube.com/vi/3FANRKLM6PI/hqdefault.jpg)](https://youtu.be/3FANRKLM6PI)
 
 **▶ Live on Stellar testnet: [alvinmunk.vercel.app](https://alvinmunk.vercel.app)** · **▶ [Demo video (2 min)](https://youtu.be/3FANRKLM6PI)** · **[Live network stats](https://alvinmunk.vercel.app/stats)**
 
