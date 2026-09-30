@@ -1,82 +1,70 @@
-# alvinmunk — Documentation Index
+# alvinmunk — documentation index
 
-All documentation for the **alvinmunk** project, organised by audience.  
-Start at the [root README](../README.md) for the project overview and quick start.
+Every file under `docs/`, grouped by who it is for. The [root README](../README.md) has the
+overview, the quick start and the live testnet contract ids.
 
----
+- [Users](#users)
+- [Contributors](#contributors)
+- [Operators / deploy](#operators--deploy)
+- [Product & design](#product--design)
+- [Program / archive](#program--archive)
 
 ## Users
-
-End-users who want to onboard, earn reputation, and use the app.
 
 | Doc | What it covers |
 | --- | --- |
 | [USER_GUIDE.md](./USER_GUIDE.md) | End-user walkthrough — onboard, vouch/claim, quests, tips, leaderboard, profile, FAQ |
-| [BLOG.md](./BLOG.md) | How the sybil-resistant proof-of-people design works (async vouch, two-track anti-sybil, passkey + fee-sponsorship + no-standing-backend) |
-
----
+| [BLOG.md](./BLOG.md) | How the sybil-resistant proof-of-people design works (async vouch, two-track anti-sybil, passkey + fee sponsorship + no standing backend) |
 
 ## Contributors
 
-Developers and community members who want to contribute code, fix bugs, or run the project locally.
+| Doc | What it covers |
+| --- | --- |
+| [../CONTRIBUTING.md](../CONTRIBUTING.md) | Local setup, branch/commit conventions, the `pnpm check` gates, and the Drips Wave find → claim → PR flow |
+| [../SECURITY.md](../SECURITY.md) | Security policy: how to report a vulnerability |
+| [ON_CHAIN_EVENTS.md](./ON_CHAIN_EVENTS.md) | The canonical, frozen schema of every Soroban event the contracts emit |
+| [SECURITY_REVIEW.md](./SECURITY_REVIEW.md) | Self-audit of the five contracts — Scout, cargo-audit, cargo-deny, clippy, no `unsafe`; findings and fixes |
+| [CSP.md](./CSP.md) | The web client's Content-Security-Policy: what each directive allows and how it is rolled out |
+| [ECOSYSTEM.md](./ECOSYSTEM.md) | Open-source, community-led development through the Drips Wave / Stellar Wave program |
+
+## Operators / deploy
 
 | Doc | What it covers |
 | --- | --- |
-| [../CONTRIBUTING.md](../CONTRIBUTING.md) | How to contribute — branch conventions, PR process, code style |
-| [ON_CHAIN_EVENTS.md](./ON_CHAIN_EVENTS.md) | Frozen on-chain event shapes — do not change without a migration |
-| [ECOSYSTEM.md](./ECOSYSTEM.md) | Open-source / community: Drips Wave maintainer, 26 bountied issues, 15 merged external-contributor PRs |
-| [SECURITY_REVIEW.md](./SECURITY_REVIEW.md) | Self-audit — Scout + cargo-audit + cargo-deny + clippy + no-`unsafe`; 4 critical findings fixed, 22 medium triaged |
-| [AGENT_HANDOFF.md](./AGENT_HANDOFF.md) | Context handoff notes for AI-assisted development sessions |
+| [DEPLOY.md](./DEPLOY.md) | Deploy your own testnet instance — keys → contracts → `.env.local` → web app → optional attester/faucet/passkey secrets |
+| [DEPLOY_MAINNET.md](./DEPLOY_MAINNET.md) | Mainnet deployment runbook for the five contracts and the app cutover |
+| [PASSKEY_WIRING.md](./PASSKEY_WIRING.md) | How passkey / Face ID onboarding is wired, and the infra to provision to turn it on |
+| [PASSKEY_HANDOFF.md](./PASSKEY_HANDOFF.md) | Passkey integration handoff — why `passkey-kit`, the canonical values, the plan and the gotchas |
 
----
-
-## Operators / Deploy
-
-Teams or individuals deploying their own instance to testnet or mainnet.
+## Product & design
 
 | Doc | What it covers |
 | --- | --- |
-| [DEPLOY.md](./DEPLOY.md) | Full "deploy your own" runbook — keys → contracts → `.env.local` → web app → attester/faucet/passkey secrets |
-| [DEPLOY_MAINNET.md](./DEPLOY_MAINNET.md) | Mainnet cutover checklist and runbook |
-| [PASSKEY_HANDOFF.md](./PASSKEY_HANDOFF.md) | Passkey infrastructure handoff — wiring `smart-account-kit`, WASM hash, LaunchTube URL |
-| [PASSKEY_WIRING.md](./PASSKEY_WIRING.md) | Step-by-step passkey wiring for Face ID / WebAuthn onboarding |
+| [product/README.md](./product/README.md) | The product & design package — read order and what each file is for |
+| [product/BRAND_DESIGN.md](./product/BRAND_DESIGN.md) | The identity: how alvinmunk looks and sounds |
+| [product/DESIGN_SYSTEM_TOKENS.md](./product/DESIGN_SYSTEM_TOKENS.md) | Implementable design tokens (dark-first, with the light theme) |
+| [product/FRONTEND_PAGES_COMPONENTS.md](./product/FRONTEND_PAGES_COMPONENTS.md) | Every page and component, with their states |
+| [product/FRONTEND_CONTENT.md](./product/FRONTEND_CONTENT.md) | Ship-ready copy for every screen and the microcopy library |
+| [product/DEPENDENCIES.md](./product/DEPENDENCIES.md) | The frontend stack: libraries, versions, install and risk notes |
+| [product/PRODUCT_MARKET_FIT.md](./product/PRODUCT_MARKET_FIT.md) | Product–market fit and go-to-market: the wedge and the riskiest assumption |
+| [product/BUSINESS_MODEL.md](./product/BUSINESS_MODEL.md) | How alvinmunk sustains itself: two-track economics backed by real external value |
+| [product/DEV_DOCS_OUTLINE.md](./product/DEV_DOCS_OUTLINE.md) | Outline of the developer docs surface (reputation as a readable primitive) |
+| [PRD.md](./PRD.md) | Product requirements document |
+| [SPRINTS.md](./SPRINTS.md) | Sprint plan, one sprint per belt, with stories and acceptance criteria |
 
----
-
-## Product & Design
-
-Designers, PMs, and stakeholders who shape the product vision and visual identity.
-
-| Doc | What it covers |
-| --- | --- |
-| [product/README.md](./product/README.md) | Product & Design package overview — read order, non-negotiables, strategic frame |
-| [product/BRAND_DESIGN.md](./product/BRAND_DESIGN.md) | Who we are, how we look & sound, the constellation metaphor, color/type/motion/voice |
-| [product/DESIGN_SYSTEM_TOKENS.md](./product/DESIGN_SYSTEM_TOKENS.md) | Implementable tokens — CSS variables, color/type/space/radius/motion scales |
-| [product/FRONTEND_PAGES_COMPONENTS.md](./product/FRONTEND_PAGES_COMPONENTS.md) | Every page + every component, their states and jobs |
-| [product/FRONTEND_CONTENT.md](./product/FRONTEND_CONTENT.md) | Real copy for every screen + the microcopy library |
-| [product/DEPENDENCIES.md](./product/DEPENDENCIES.md) | The exact frontend stack/libraries, versions, install, risks |
-| [product/PRODUCT_MARKET_FIT.md](./product/PRODUCT_MARKET_FIT.md) | Beachhead, the "aha", activation, GTM, how the end user meets us |
-| [product/BUSINESS_MODEL.md](./product/BUSINESS_MODEL.md) | How it sustains itself: two-track economics, revenue, treasury, grants |
-| [product/DEV_DOCS_OUTLINE.md](./product/DEV_DOCS_OUTLINE.md) | The `/docs` "for devs" surface — reputation as a readable primitive |
-| [MARKETING.md](./MARKETING.md) | Launch thread, promotion strategy, and marketing kit |
-| [GTM.md](./GTM.md) | Go-to-market plan and growth tactics |
-| [PITCH_DECK.md](./PITCH_DECK.md) | Pitch deck outline / speaker notes (problem → proof-of-people → traction → ask) |
-| [pitch-deck.pdf](./pitch-deck.pdf) | Designed 12-slide deck (brand-skinned) |
-| [IDEA_SUBMISSION.md](./IDEA_SUBMISSION.md) | Original idea submission document |
-| [PRD.md](./PRD.md) | Product Requirements Document |
-| [SPRINTS.md](./SPRINTS.md) | Sprint-by-sprint roadmap and build order |
-
----
-
-## Program / Archive
-
-Belt-program submission evidence and user-research data.
+## Program / archive
 
 | Doc | What it covers |
 | --- | --- |
-| [BELT_SUBMISSIONS.md](./BELT_SUBMISSIONS.md) | White → Blue belt submission screenshots, tx hashes, and rubric tables (Rise In Stellar Journey to Mastery) |
-| [USER_FEEDBACK.md](./USER_FEEDBACK.md) | Raw user feedback, planned iterations, and the weighted-vouch backlog item |
-| [DEMO_SCRIPT.md](./DEMO_SCRIPT.md) | Demo walkthrough script for live presentations and recorded walkthroughs |
-| [feedback/responses.xlsx](./feedback/responses.xlsx) | Exported Google Form responses (Excel) |
-| [feedback/responses.csv](./feedback/responses.csv) | Exported Google Form responses (CSV) |
-| [testnet-traction.csv](./testnet-traction.csv) | On-chain traction data snapshot from Soroban RPC |
+| [BELT_SUBMISSIONS.md](./BELT_SUBMISSIONS.md) | White → Blue belt submission evidence: screenshots, tx hashes and rubric tables |
+| [IDEA_SUBMISSION.md](./IDEA_SUBMISSION.md) | Builder-Track idea submission and its Stellar anchor angle |
+| [PITCH_DECK.md](./PITCH_DECK.md) | Pitch deck content, slide by slide |
+| [pitch-deck.pdf](./pitch-deck.pdf) | The designed 12-slide deck |
+| [GTM.md](./GTM.md) | Go-to-market kit for the traction sprint |
+| [MARKETING.md](./MARKETING.md) | Launch content: the X thread and promotion kit |
+| [DEMO_SCRIPT.md](./DEMO_SCRIPT.md) | Script for the demo video |
+| [USER_FEEDBACK.md](./USER_FEEDBACK.md) | User onboarding & feedback: the Google Form spec and the feedback-driven iteration plan |
+| [feedback/responses.xlsx](./feedback/responses.xlsx) | Exported feedback-form responses (Excel) |
+| [feedback/responses.csv](./feedback/responses.csv) | Exported feedback-form responses (CSV) |
+| [testnet-traction.csv](./testnet-traction.csv) | Testnet wallets with their @handle, wallet type and Stellar Expert link |
+| [archive/AGENT_HANDOFF.md](./archive/AGENT_HANDOFF.md) | Archived June 2026 session handoff — historical, superseded |

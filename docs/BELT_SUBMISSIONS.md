@@ -1,11 +1,8 @@
-# Belt Submissions — Rise In Stellar Journey to Mastery
+# Belt submissions — Rise In Stellar Journey to Mastery
 
-This file contains the per-belt submission evidence for the **Rise In Stellar Journey to Mastery** belt program (White → Master).  
-All screenshots, transaction hashes, and rubric tables are preserved here unchanged.
-
----
-
-## Table of Contents
+The per-belt submission evidence for the Rise In **Stellar Journey to Mastery** program (White → Blue):
+screenshots, transaction hashes and rubric tables, moved here unchanged from the [README](../README.md)
+(only relative links were re-based; the live contract table stays in the README).
 
 - [White Belt (Level 1)](#white-belt-level-1--submission-screenshots)
 - [Yellow Belt (Level 2)](#yellow-belt-level-2--submission)
@@ -41,15 +38,9 @@ The `/wallet` route connects through the real **[Stellar Wallets Kit](https://gi
 
 ### Deployed contracts (Stellar testnet)
 
-Five Soroban contracts, deployed + cross-contract verified on-chain:
+The five contract ids, with explorer links, are in the [README table](../README.md#deployed-contracts-stellar-testnet).
 
-| Contract | Address |
-| --- | --- |
-| Reputation (Social/Earned XP, vouches, `att_set`) | [`CDRYXUS55TKGYEM3YUB3YTJWQKSWWQABK6YPQK7SLEPVALWYK4IR7WCL`](https://stellar.expert/explorer/testnet/contract/CDRYXUS55TKGYEM3YUB3YTJWQKSWWQABK6YPQK7SLEPVALWYK4IR7WCL) |
-| Quest Registry (attester-signed quests) | [`CBEJVYLWTU6BQDL3RXKWW6CYUISRC4SUIVURCG452CTOIANGY2N7V3WI`](https://stellar.expert/explorer/testnet/contract/CBEJVYLWTU6BQDL3RXKWW6CYUISRC4SUIVURCG452CTOIANGY2N7V3WI) |
-| Rewards (USDC tip + Earned-gated claim) | [`CBMO3X3EXKUZAHNAPRSFVBXJJARJD5I5VME5UQ7OSI2OA5Q56UO7TM3G`](https://stellar.expert/explorer/testnet/contract/CBMO3X3EXKUZAHNAPRSFVBXJJARJD5I5VME5UQ7OSI2OA5Q56UO7TM3G) |
-| Registry (handle ↔ address) | [`CCT5EGFZ33IFLMUU6EBMC6NWRLX5TWJS5FICNJFBG7MU5PTAU6PFMVH4`](https://stellar.expert/explorer/testnet/contract/CCT5EGFZ33IFLMUU6EBMC6NWRLX5TWJS5FICNJFBG7MU5PTAU6PFMVH4) |
-| Gate (reputation-gated access) | [`CDX4QTFVT7VOGXCSASD75INCUHNZJUE3DRZDL65Z65PMIYJ5JELP576E`](https://stellar.expert/explorer/testnet/contract/CDX4QTFVT7VOGXCSASD75INCUHNZJUE3DRZDL65Z65PMIYJ5JELP576E) |
+The set was redeployed on 2026-09-30 to pick up the constructor, claim-key vouch and award-payload upgrades; the user-activity links further down point at the previous deployment, where that activity happened. `deployments/testnet.json` always holds the current ids.
 
 ### Contract call — transaction hash (verifiable on Stellar Expert)
 
@@ -58,7 +49,7 @@ A real `mint_vouch` call on the Reputation contract (reproduce with `node script
 > **`aa69c8555db3027501f248a5d7a245bb3bf9b404a791e2b5053b31a2e6c2d178`**
 > → https://stellar.expert/explorer/testnet/tx/aa69c8555db3027501f248a5d7a245bb3bf9b404a791e2b5053b31a2e6c2d178
 
-### Requirements — where they live
+### Requirements → where they live
 
 | Requirement | Implementation |
 | --- | --- |
@@ -88,7 +79,7 @@ A complete end-to-end Stellar dApp: five Soroban contracts that talk to each oth
 - **Contract addresses (testnet):** the five contracts in the [Yellow Belt table above](#deployed-contracts-stellar-testnet).
 - **Transaction hash:** `mint_vouch` call → [`aa69c8555db3027501f248a5d7a245bb3bf9b404a791e2b5053b31a2e6c2d178`](https://stellar.expert/explorer/testnet/tx/aa69c8555db3027501f248a5d7a245bb3bf9b404a791e2b5053b31a2e6c2d178)
 
-### Requirements — where they live
+### Requirements → where they live
 
 | Requirement | Implementation |
 | --- | --- |
@@ -96,7 +87,7 @@ A complete end-to-end Stellar dApp: five Soroban contracts that talk to each oth
 | **Inter-contract communication** | `gate.check`/`unlock` cross-reads `reputation.get_score`/`get_earned` (`gate/src/lib.rs:196`); `quest_registry.award_quest` cross-calls `reputation.award_xp` (`quest_registry/src/lib.rs:200`); `rewards` moves USDC via the SAC `token::Client` |
 | **Event streaming & real-time updates** | Every contract publishes events (`social`, `xp`, `tipped`, `reward`, `unlocked`, `streak`, …); the leaderboard + activity feed poll RPC `getEvents` every 5s (`lib/events.ts`, `app/leaderboard/page.tsx`) |
 | **CI/CD pipeline** | `.github/workflows/ci.yml` — contracts job (`cargo fmt --check`, `cargo clippy -D warnings`, `cargo test`) + web job (`pnpm typecheck`, `pnpm lint`, `pnpm test`) on every push/PR |
-| Smart contract deployment workflow | `scripts/deploy-testnet.sh` (build → deploy → init → cross-wire all 5 contracts); `contracts/Makefile` |
+| Smart contract deployment workflow | `scripts/deploy-testnet.sh` (build → deploy with constructor arguments → cross-wire all 5 contracts); `contracts/Makefile` |
 | Mobile responsive frontend | Tailwind responsive layout across all routes — see screenshot above |
 | Error handling & loading states | `utils.ts` `humanizeError` (insufficient / trustline / timeout / rejected), toast + pending/success/fail status on every contract call |
 | Writing tests for contracts and frontend | **134 tests green** — 57 contract (`cargo test`, incl. property/fuzz) + 59 web + 18 shared (`vitest`) |
@@ -139,10 +130,10 @@ A production MVP on Stellar with real users, one-tap onboarding, analytics + mon
 | Name | Wallet or @handle | Rating | Notes / wants next |
 | --- | --- | :---: | --- |
 | Berkay Gündüz (beko) | [`GB72PZXN…YZ3H3`](https://stellar.expert/explorer/testnet/account/GB72PZXNOU6DJ2BXZDITS24A5JCN3CEUNTKIX5ESZDXAY2R5HO7YZ3H3) | 4/5 | "Interface is working well." → wants **weighted vouch** |
-| Umut Akçayır | [@umut](https://alvinmunk.vercel.app/u/umut) | 5/5 | — |
-| Leyla Bayıroğlu | [@leyla](https://alvinmunk.vercel.app/u/leyla) | 5/5 | — |
-| Cansu Güzel | [@cansu](https://alvinmunk.vercel.app/u/cansu) | 3/5 | — |
-| Nazlı Kır | [@nazli](https://alvinmunk.vercel.app/u/nazli) | 1/5 | — |
+| Umut Akçayır | [@umut](https://alvinmunk.vercel.app/u/umut?network=testnet) | 5/5 | — |
+| Leyla Bayıroğlu | [@leyla](https://alvinmunk.vercel.app/u/leyla?network=testnet) | 5/5 | — |
+| Cansu Güzel | [@cansu](https://alvinmunk.vercel.app/u/cansu?network=testnet) | 3/5 | — |
+| Nazlı Kır | [@nazli](https://alvinmunk.vercel.app/u/nazli?network=testnet) | 1/5 | — |
 
 **Summary:** **5 responses, average 3.6/5**, ratings span 1–5 (organic, not all 5-star); UI praised; top qualitative request = **weighted vouch**.
 
@@ -153,7 +144,7 @@ A production MVP on Stellar with real users, one-tap onboarding, analytics + mon
 | "Recipients are hard — nobody memorizes a 56-char key" | **Tip by `@handle`** — registry resolves the handle to a wallet on-chain, with inline confirmation before sending (`components/Tip.tsx`) | [`2bac3c1`](https://github.com/mericcintosun/alvinmunk/commit/2bac3c1) |
 | "weighted vouch" (top request) | Scoped weighted-vouch for the reputation track (weight by voucher reputation, split across vouchees, seed-set anchored) | planned — tracked in [`docs/USER_FEEDBACK.md`](./USER_FEEDBACK.md) |
 
-### Requirements — where they live
+### Requirements → where they live
 
 | Requirement | Implementation |
 | --- | --- |
@@ -191,7 +182,7 @@ Feedback is collected via the public [Google Form](https://forms.gle/kNXR3zmZhGh
 | Recipients are hard — nobody memorizes a 56-char key | **Tip by `@handle`**: type `@beko`, the registry resolves it to the wallet on-chain (debounced), with inline confirmation of the resolved address before sending | [`components/Tip.tsx`](../apps/web/src/components/Tip.tsx) |
 | "weighted vouch" (top request) | Scoped for the reputation track — weight each vouch by the voucher's own reputation, split across their vouchees, anchored to a verified seed set | tracked in [`docs/USER_FEEDBACK.md`](./USER_FEEDBACK.md) |
 
-### Requirements — where they live
+### Requirements → where they live
 
 | Requirement | Implementation |
 | --- | --- |
@@ -201,3 +192,4 @@ Feedback is collected via the public [Google Form](https://forms.gle/kNXR3zmZhGh
 | Demo video (full walkthrough) | https://youtu.be/3FANRKLM6PI |
 | Feedback collection + Excel export | [Google Form](https://forms.gle/kNXR3zmZhGhgmrt58) → [`docs/feedback/responses.xlsx`](./feedback/responses.xlsx) |
 | Feedback-driven iteration (+ commit link) | Tip-by-`@handle` (`components/Tip.tsx`, [`2bac3c1`](https://github.com/mericcintosun/alvinmunk/commit/2bac3c1)) — see table above |
+
