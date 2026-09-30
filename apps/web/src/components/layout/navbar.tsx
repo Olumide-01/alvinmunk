@@ -1,14 +1,33 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { Logo } from '@/components/brand/logo';
 import { ConnectButton } from '@/components/wallet/connect-button';
+import { NetworkBadge } from '@/components/layout/network-badge';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useTranslations } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
+import { isReadOnlyView } from '@/lib/read-network';
+
+/** The wallet button — absent on a read-only `?network=` view (lib/read-network), which
+ *  offers no writes. Suspense keeps static pages static: the server renders the plain
+ *  button, and the client drops it once it can read the query. */
+function WalletButton(props: { onNavigate?: () => void }) {
+  return (
+    <Suspense fallback={<ConnectButton {...props} />}>
+      <WalletButtonUnlessReadOnly {...props} />
+    </Suspense>
+  );
+}
+
+function WalletButtonUnlessReadOnly(props: { onNavigate?: () => void }) {
+  const pathname = usePathname();
+  const network = useSearchParams().get('network');
+  return isReadOnlyView(pathname, network) ? null : <ConnectButton {...props} />;
+}
 
 export function Navbar() {
   const t = useTranslations();
@@ -30,6 +49,14 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Back/forward navigation never taps a link inside the panel, so any route change
+  // closes it too.
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  const closePanel = () => setOpen(false);
+
   return (
     <header
       className={cn(
@@ -47,6 +74,7 @@ export function Navbar() {
               <Link
                 key={l.href}
                 href={l.href}
+                aria-current={active ? 'page' : undefined}
                 className={cn(
                   'rounded-full px-4 py-2 text-sm transition-colors',
                   active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
@@ -59,13 +87,16 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
+          <NetworkBadge />
           <ThemeToggle />
           <div className="hidden md:block">
-            <ConnectButton />
+            <WalletButton />
           </div>
           <button
             className="inline-flex size-10 items-center justify-center rounded-full text-foreground md:hidden"
             aria-label={open ? t('nav.closeMenu') : t('nav.openMenu')}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -74,20 +105,26 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="border-t border-border/60 bg-background/95 md:hidden">
+        <div id="mobile-nav" className="border-t border-border/60 bg-background/95 md:hidden">
           <div className="container flex flex-col gap-1 py-4">
-            {LINKS.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-4 py-3 text-sm text-foreground/90 hover:bg-muted"
-              >
-                {l.label}
-              </Link>
-            ))}
-            <div className="px-2 pt-2" onClick={() => setOpen(false)}>
-              <ConnectButton />
+            {LINKS.map((l) => {
+              const active = pathname === l.href;
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  aria-current={active ? 'page' : undefined}
+                  onClick={closePanel}
+                  className="rounded-xl px-4 py-3 text-sm text-foreground/90 hover:bg-muted"
+                >
+                  {l.label}
+                </Link>
+              );
+            })}
+            {/* Close only when a link inside is followed: a wrapper that closed on any click
+                would unmount the account menu the moment its chip is tapped. */}
+            <div className="px-2 pt-2">
+              <WalletButton onNavigate={closePanel} />
             </div>
           </div>
         </div>
